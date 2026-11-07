@@ -1,0 +1,53 @@
+# Hard pass/fail rubric. No partial credit: a lesson ships only if EVERY check passes.
+# type: det = deterministic Python check (cheap, reproducible)   llm = LLM judge with reference facts
+checks:
+  - id: D1
+    dimension: coherent teaching flow
+    type: det
+    question: Does the lesson have headings for What is it / Why it matters / How it works / Example / Recap?
+    fix_hint: Add the missing section heading(s) and the content under them.
+  - id: D2
+    dimension: beginner-friendly language
+    type: det
+    question: Average sentence <= 15 words and no sentence > 28 words?
+    fix_hint: Split long sentences. One idea per sentence.
+  - id: D3
+    dimension: no unexplained jargon
+    type: det
+    question: Is every technical term defined in the sentence where it first appears (or the next one)?
+    fix_hint: Define the term with "means", "stands for" or "is called" right where it first appears.
+  - id: D4
+    dimension: covers the key points
+    type: det
+    question: Is the lesson 500-1100 words (long enough to teach, short enough for a beginner)?
+    fix_hint: Trim or expand to fit the range.
+  - id: D5
+    dimension: beginner-friendly language
+    type: det
+    question: Is it free of banned buzzwords and too-deep technical phrases, with few very long words?
+    fix_hint: Replace the flagged phrase with a plain everyday word.
+  - id: J1
+    dimension: accurate & grounded
+    type: llm
+    question: Does every claim agree with the REFERENCE FACTS, with no false or invented claim?
+    fix_hint: Remove or correct the contradicting claim using the reference facts.
+  - id: J2
+    dimension: covers the key points
+    type: llm
+    question: Does it explain what RAG is, why it matters, and how it works (prepare knowledge, retrieve, augment the prompt, generate), plus at least one limit?
+    fix_hint: Add the missing key point in simple words.
+  - id: J3
+    dimension: teaches by example
+    type: llm
+    question: Does it contain BOTH an everyday analogy AND a concrete question walked through step by step?
+    fix_hint: Add the missing analogy or worked example.
+  - id: J4
+    dimension: coherent teaching flow
+    type: llm
+    question: Does each section build on the previous one, with no concept used before it is explained?
+    fix_hint: Reorder, or explain the concept before first use.
+  - id: J5
+    dimension: beginner-friendly language
+    type: llm
+    question: Could a 12th-grade learner from a non-English-medium school follow it (simple words, no idioms, no culture-specific references that need outside knowledge)?
+    fix_hint: Replace idioms and hard words with simple ones.
